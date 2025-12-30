@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Risk Management Tool - Comprehensive risk assessment and treatment platform">
+    <title>Risk Management Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">🛡️ Risk Management Tool</h1>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="dashboard" id="nav-dashboard">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="nav-btn" data-section="assets" id="nav-assets">
+                    <span class="nav-icon">💼</span>
+                    Assets
+                </button>
+                <button class="nav-btn" data-section="threats" id="nav-threats">
+                    <span class="nav-icon">⚠️</span>
+                    Threats
+                </button>
+                <button class="nav-btn" data-section="assessment" id="nav-assessment">
+                    <span class="nav-icon">📈</span>
+                    Risk Assessment
+                </button>
+                <button class="nav-btn" data-section="treatment" id="nav-treatment">
+                    <span class="nav-icon">🎯</span>
+                    Treatment
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Dashboard Overview</h2>
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="load-sample-btn">Load Sample Data</button>
+                        <button class="btn btn-primary" id="export-pdf-btn">📄 Export PDF</button>
+                        <button class="btn btn-primary" id="export-excel-btn">📊 Export Excel</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💼</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-assets">0</div>
+                            <div class="stat-label">Total Assets</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-vulnerabilities">0</div>
+                            <div class="stat-label">Vulnerabilities</div>
+                        </div>
+                    </div>
+                    <div class="stat-card high-risk">
+                        <div class="stat-icon">🔴</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-high-risk">0</div>
+                            <div class="stat-label">High Risk</div>
+                        </div>
+                    </div>
+                    <div class="stat-card medium-risk">
+                        <div class="stat-icon">🟡</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-medium-risk">0</div>
+                            <div class="stat-label">Medium Risk</div>
+                        </div>
+                    </div>
+                    <div class="stat-card low-risk">
+                        <div class="stat-icon">🟢</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-low-risk">0</div>
+                            <div class="stat-label">Low Risk</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="stat-treatments">0</div>
+                            <div class="stat-label">Active Treatments</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Risk Distribution</h3>
+                        <div id="risk-distribution-chart"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Recent Vulnerabilities</h3>
+                        <div id="recent-vulnerabilities"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assets Section -->
+        <section id="assets" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Asset Inventory</h2>
+                    <button class="btn btn-primary" id="add-asset-btn">+ Add Asset</button>
+                </div>
+
+                <div class="card">
+                    <div class="table-controls">
+                        <input type="text" id="asset-search" class="search-input" placeholder="Search assets...">
+                        <select id="asset-filter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="Hardware">Hardware</option>
+                            <option value="Software">Software</option>
+                            <option value="Data">Data</option>
+                            <option value="Personnel">Personnel</option>
+                            <option value="Facilities">Facilities</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="assets-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th>Criticality</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assets-tbody">
+                                <tr class="empty-state">
+                                    <td colspan="6">No assets found. Click "Add Asset" to get started.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Threats Section -->
+        <section id="threats" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Threats & Vulnerabilities</h2>
+                    <button class="btn btn-primary" id="add-vulnerability-btn">+ Add Vulnerability</button>
+                </div>
+
+                <div class="card">
+                    <h3>Threat Library</h3>
+                    <div id="threat-library"></div>
+                </div>
+
+                <div class="card">
+                    <h3>Vulnerabilities</h3>
+                    <div class="table-container">
+                        <table class="data-table" id="vulnerabilities-table">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
+                                    <th>Threat</th>
+                                    <th>Likelihood</th>
+                                    <th>Impact</th>
+                                    <th>Risk Score</th>
+                                    <th>Risk Level</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vulnerabilities-tbody">
+                                <tr class="empty-state">
+                                    <td colspan="7">No vulnerabilities identified yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Assessment Section -->
+        <section id="assessment" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Risk Assessment Matrix</h2>
+                </div>
+
+                <div class="card">
+                    <div class="risk-matrix-container">
+                        <div class="matrix-labels">
+                            <div class="y-axis-label">Likelihood</div>
+                        </div>
+                        <div class="matrix-wrapper">
+                            <div class="matrix-scale">
+                                <div class="scale-item">5 - Almost Certain</div>
+                                <div class="scale-item">4 - Likely</div>
+                                <div class="scale-item">3 - Possible</div>
+                                <div class="scale-item">2 - Unlikely</div>
+                                <div class="scale-item">1 - Rare</div>
+                            </div>
+                            <div id="risk-matrix" class="risk-matrix"></div>
+                        </div>
+                        <div class="x-axis-label">Impact</div>
+                        <div class="matrix-scale-x">
+                            <div class="scale-item">1 - Insignificant</div>
+                            <div class="scale-item">2 - Minor</div>
+                            <div class="scale-item">3 - Moderate</div>
+                            <div class="scale-item">4 - Major</div>
+                            <div class="scale-item">5 - Catastrophic</div>
+                        </div>
+                    </div>
+
+                    <div class="risk-legend">
+                        <h4>Risk Levels</h4>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color low"></span>
+                                <span>Low (1-6): Acceptable, routine monitoring</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color medium"></span>
+                                <span>Medium (8-12): Management attention required</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color high"></span>
+                                <span>High (15-25): Immediate action required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Treatment Section -->
+        <section id="treatment" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Risk Treatment Tracking</h2>
+                    <button class="btn btn-primary" id="add-treatment-btn">+ Add Treatment Plan</button>
+                </div>
+
+                <div class="treatment-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Mitigate">Mitigate</button>
+                    <button class="filter-btn" data-filter="Accept">Accept</button>
+                    <button class="filter-btn" data-filter="Transfer">Transfer</button>
+                    <button class="filter-btn" data-filter="Avoid">Avoid</button>
+                </div>
+
+                <div class="card">
+                    <div class="table-container">
+                        <table class="data-table" id="treatments-table">
+                            <thead>
+                                <tr>
+                                    <th>Vulnerability</th>
+                                    <th>Strategy</th>
+                                    <th>Status</th>
+                                    <th>Responsible</th>
+                                    <th>Due Date</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="treatments-tbody">
+                                <tr class="empty-state">
+                                    <td colspan="7">No treatment plans created yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Asset Modal -->
+    <div id="asset-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="asset-modal-title">Add Asset</h3>
+                <button class="modal-close" id="asset-modal-close">&times;</button>
+            </div>
+            <form id="asset-form">
+                <input type="hidden" id="asset-id">
+                <div class="form-group">
+                    <label for="asset-name">Asset Name *</label>
+                    <input type="text" id="asset-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="asset-type">Type *</label>
+                    <select id="asset-type" required>
+                        <option value="">Select Type</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Software">Software</option>
+                        <option value="Data">Data</option>
+                        <option value="Personnel">Personnel</option>
+                        <option value="Facilities">Facilities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="asset-value">Value (1-5) *</label>
+                    <input type="number" id="asset-value" min="1" max="5" required>
+                    <small>1 = Low value, 5 = Critical value</small>
+                </div>
+                <div class="form-group">
+                    <label for="asset-criticality">Criticality *</label>
+                    <select id="asset-criticality" required>
+                        <option value="">Select Criticality</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="asset-description">Description</label>
+                    <textarea id="asset-description" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="asset-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Asset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vulnerability Modal -->
+    <div id="vulnerability-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="vulnerability-modal-title">Add Vulnerability</h3>
+                <button class="modal-close" id="vulnerability-modal-close">&times;</button>
+            </div>
+            <form id="vulnerability-form">
+                <input type="hidden" id="vulnerability-id">
+                <div class="form-group">
+                    <label for="vulnerability-asset">Asset *</label>
+                    <select id="vulnerability-asset" required>
+                        <option value="">Select Asset</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vulnerability-threat">Threat *</label>
+                    <select id="vulnerability-threat" required>
+                        <option value="">Select Threat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vulnerability-description">Description</label>
+                    <textarea id="vulnerability-description" rows="2"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vulnerability-likelihood">Likelihood (1-5) *</label>
+                        <select id="vulnerability-likelihood" required>
+                            <option value="">Select</option>
+                            <option value="1">1 - Rare</option>
+                            <option value="2">2 - Unlikely</option>
+                            <option value="3">3 - Possible</option>
+                            <option value="4">4 - Likely</option>
+                            <option value="5">5 - Almost Certain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vulnerability-impact">Impact (1-5) *</label>
+                        <select id="vulnerability-impact" required>
+                            <option value="">Select</option>
+                            <option value="1">1 - Insignificant</option>
+                            <option value="2">2 - Minor</option>
+                            <option value="3">3 - Moderate</option>
+                            <option value="4">4 - Major</option>
+                            <option value="5">5 - Catastrophic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="risk-preview" id="risk-preview">
+                    <strong>Risk Score:</strong> <span id="preview-score">-</span> | 
+                    <strong>Risk Level:</strong> <span id="preview-level">-</span>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="vulnerability-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Vulnerability</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Treatment Modal -->
+    <div id="treatment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="treatment-modal-title">Add Treatment Plan</h3>
+                <button class="modal-close" id="treatment-modal-close">&times;</button>
+            </div>
+            <form id="treatment-form">
+                <input type="hidden" id="treatment-id">
+                <div class="form-group">
+                    <label for="treatment-vulnerability">Vulnerability *</label>
+                    <select id="treatment-vulnerability" required>
+                        <option value="">Select Vulnerability</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="treatment-strategy">Strategy *</label>
+                    <select id="treatment-strategy" required>
+                        <option value="">Select Strategy</option>
+                        <option value="Mitigate">Mitigate - Reduce likelihood or impact</option>
+                        <option value="Accept">Accept - Acknowledge and accept consequences</option>
+                        <option value="Transfer">Transfer - Shift to third party</option>
+                        <option value="Avoid">Avoid - Eliminate the activity</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="treatment-status">Status *</label>
+                    <select id="treatment-status" required>
+                        <option value="Planned">Planned</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="treatment-responsible">Responsible Party *</label>
+                    <input type="text" id="treatment-responsible" required>
+                </div>
+                <div class="form-group">
+                    <label for="treatment-due-date">Due Date</label>
+                    <input type="date" id="treatment-due-date">
+                </div>
+                <div class="form-group">
+                    <label for="treatment-notes">Notes</label>
+                    <textarea id="treatment-notes" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="treatment-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Treatment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Matrix Cell Detail Modal -->
+    <div id="matrix-detail-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="matrix-detail-title">Vulnerabilities</h3>
+                <button class="modal-close" id="matrix-detail-close">&times;</button>
+            </div>
+            <div id="matrix-detail-content"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="lib/jspdf.min.js"></script>
+    <script src="lib/jspdf.plugin.autotable.min.js"></script>
+    <script src="lib/xlsx.full.min.js"></script>
+    <script src="js/dataStore.js"></script>
+    <script src="js/riskCalculator.js"></script>
+    <script src="js/assetManager.js"></script>
+    <script src="js/threatManager.js"></script>
+    <script src="js/riskMatrix.js"></script>
+    <script src="js/treatmentManager.js"></script>
+    <script src="js/exportManager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

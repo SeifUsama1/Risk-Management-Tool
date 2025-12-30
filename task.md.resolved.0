@@ -1,0 +1,27 @@
+# Risk Management Tool - Project Tasks
+
+## Planning Phase
+- [/] Create project proposal document
+- [ ] Design system architecture
+- [ ] Create implementation plan
+
+## Development Phase
+- [ ] Set up project structure
+- [ ] Build asset inventory module
+- [ ] Build threat/vulnerability mapping module
+- [ ] Implement likelihood × impact scoring
+- [ ] Create automated risk classification
+- [ ] Build risk matrix generator
+- [ ] Implement dashboard for risk treatment tracking
+- [ ] Add export functionality (Excel/PDF)
+
+## Documentation Phase
+- [ ] Write comprehensive documentation (10-12 pages)
+- [ ] Add screenshots and sample outputs
+- [ ] Document limitations and future improvements
+
+## Testing & Verification
+- [ ] Test all modules
+- [ ] Verify export functionality
+- [ ] Prepare demo data
+- [ ] Create presentation materials
