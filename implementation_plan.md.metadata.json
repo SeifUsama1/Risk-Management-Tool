@@ -1,5 +1,0 @@
-{
-  "artifactType": "ARTIFACT_TYPE_IMPLEMENTATION_PLAN",
-  "summary": "Comprehensive implementation plan for Risk Management Tool detailing file structure, module development sequence, verification strategy including manual testing and automated validation. Plan covers asset inventory, threat/vulnerability mapping, risk scoring, classification, treatment tracking, and export functionality with specific implementation steps for each component.",
-  "updatedAt": "2025-12-05T13:24:32.728683500Z"
-}
